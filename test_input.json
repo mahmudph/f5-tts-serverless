@@ -1,0 +1,8 @@
+{
+  "input": {
+    "text": "Hello, this is a test of the F5 text to speech model running on RunPod serverless.",
+    "ref_audio": "https://example.com/reference-voice.wav",
+    "ref_text": "This is the reference text for the sample voice.",
+    "output_format": "wav"
+  }
+}
