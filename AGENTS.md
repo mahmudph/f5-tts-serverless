@@ -28,10 +28,10 @@ docker push <your-image>:latest
 
 ### Option B: Build with GitHub Actions (recommended)
 
-A workflow is provided at `.github/workflows/docker-build.yml`. It automatically builds and pushes the image to **GitHub Container Registry (GHCR)** on every push to `main`/`master` or manual trigger.
+A workflow is provided at `.github/workflows/docker-build.yml`. It builds and pushes the image to **GitHub Container Registry (GHCR)** when triggered manually via `workflow_dispatch`.
 
 1. Push this repo to GitHub.
-2. Go to **Actions** → run the workflow once.
+2. Go to **Actions** → select **Build and Push Docker Image** → click **Run workflow**.
 3. After the first successful push, make the GHCR package public:
    - GitHub → **Packages** → `f5-tts-small-runpod` → **Package settings** → **Manage visibility** → **Public**.
 4. In RunPod, use the image:

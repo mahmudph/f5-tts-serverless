@@ -9,7 +9,7 @@ RunPod serverless worker for text-to-speech inference using [F5-TTS](https://git
 - Accepts a reference audio URL for voice cloning.
 - Returns generated audio as a public R2 URL (avoids RunPod payload limits).
 - Supports `wav` and `mp3` output formats.
-- Auto-builds Docker image via GitHub Actions and pushes to GHCR.
+- Builds Docker image via GitHub Actions (manual trigger) and pushes to GHCR.
 
 ## API
 
@@ -54,11 +54,11 @@ On failure:
 
 ## Deploy
 
-### 1. Push to GitHub
+### 1. Build with GitHub Actions
 
-This repo includes a GitHub Actions workflow that builds the Docker image and pushes it to GitHub Container Registry (GHCR).
+This repo includes a GitHub Actions workflow that builds the Docker image and pushes it to GitHub Container Registry (GHCR). The workflow is triggered **manually** via `workflow_dispatch`.
 
-Push to the `main` branch, then go to **Actions** and run the workflow once.
+Go to **Actions** → select **Build and Push Docker Image** → click **Run workflow**.
 
 ### 2. Make GHCR package public
 
