@@ -1,11 +1,11 @@
-# F5-TTS Small RunPod Serverless
+# F5-TTS RunPod Serverless
 
-RunPod serverless worker for text-to-speech inference using [F5-TTS](https://github.com/SWivid/F5-TTS) Small models. Output audio is uploaded to Cloudflare R2 and returned as a public URL.
+RunPod serverless worker for text-to-speech inference using [F5-TTS](https://github.com/SWivid/F5-TTS) v1 Base model. Output audio is uploaded to Cloudflare R2 and returned as a public URL.
 
 ## Features
 
 - Runs on RunPod Serverless GPU workers.
-- Uses `F5TTS_v1_Small` by default (hardcoded).
+- Uses `F5TTS_v1_Base` (hardcoded).
 - Accepts a reference audio URL for voice cloning.
 - Returns generated audio as a public R2 URL (avoids RunPod payload limits).
 - Supports `wav` and `mp3` output formats.
@@ -38,7 +38,7 @@ RunPod serverless worker for text-to-speech inference using [F5-TTS](https://git
 ```json
 {
   "audio_url": "https://pub-xxx.r2.dev/tts-output/uuid.wav",
-  "model_used": "F5TTS_v1_Small",
+  "model_used": "F5TTS_v1_Base",
   "sample_rate": 24000,
   "duration_seconds": 5.2
 }

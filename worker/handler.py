@@ -5,7 +5,7 @@ from pydub import AudioSegment
 from storage import download_audio, upload_to_r2
 from inference import synthesize
 
-MODEL_NAME = "F5TTS_v1_Small"
+MODEL_NAME = "F5TTS_v1_Base"
 ALLOWED_FORMATS = ["wav", "mp3"]
 
 

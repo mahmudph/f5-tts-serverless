@@ -4,7 +4,7 @@ from f5_tts.api import F5TTS
 MODELS = {}
 
 
-def load_tts_model(model_name: str = "F5TTS_v1_Small"):
+def load_tts_model(model_name: str = "F5TTS_v1_Base"):
     if model_name not in MODELS:
         device = "cuda" if torch.cuda.is_available() else "cpu"
         MODELS[model_name] = F5TTS(model=model_name, device=device)
@@ -15,7 +15,7 @@ def synthesize(
     text: str,
     ref_audio_path: str,
     ref_text: str = "",
-    model_name: str = "F5TTS_v1_Small",
+    model_name: str = "F5TTS_v1_Base",
     output_path: str = "/tmp/output.wav",
     remove_silence: bool = False,
     cfg_strength: float = 2.0,

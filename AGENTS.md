@@ -2,7 +2,7 @@
 
 ## Project state
 
-- RunPod serverless worker for TTS inference using F5-TTS Small models.
+- RunPod serverless worker for TTS inference using F5-TTS v1 Base model.
 - Output audio is uploaded to Cloudflare R2 and returned as a public URL.
 - No local execution required; build the Docker image and deploy/test on RunPod.
 - Python 3.10 inside `nvidia/cuda:12.1.0-runtime-ubuntu22.04` base image.
@@ -33,7 +33,7 @@ A workflow is provided at `.github/workflows/docker-build.yml`. It builds and pu
 1. Push this repo to GitHub.
 2. Go to **Actions** → select **Build and Push Docker Image** → click **Run workflow**.
 3. After the first successful push, make the GHCR package public:
-   - GitHub → **Packages** → `f5-tts-small-runpod` → **Package settings** → **Manage visibility** → **Public**.
+   - GitHub → **Packages** → `f5-fts` → **Package settings** → **Manage visibility** → **Public**.
 4. In RunPod, use the image:
    ```text
    ghcr.io/<username>/<repo>:latest
@@ -77,7 +77,7 @@ Optional:
 ```json
 {
   "audio_url": "https://...",
-  "model_used": "F5TTS_v1_Small",
+  "model_used": "F5TTS_v1_Base",
   "sample_rate": 24000,
   "duration_seconds": 5.2
 }
