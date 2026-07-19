@@ -73,10 +73,10 @@ If you keep it private, add a **Container Registry Auth** in RunPod with a GitHu
 ### 3. Create RunPod endpoint
 
 1. Open [RunPod Console](https://console.runpod.io).
-2. Create a new **Serverless Endpoint**.
-3. Use the image:
+2. Create a new **Serverless Endpoint** → **Deploy from Docker Image**.
+3. In the **Container Image** field, paste:
    ```text
-   ghcr.io/<username>/<repo>:latest
+   ghcr.io/mahmudph/f5-fts:8b77780
    ```
 4. Select a GPU (e.g., RTX 3090 / A4000 / A5000 or higher).
 5. Set the environment variables below.
