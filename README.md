@@ -18,20 +18,20 @@ RunPod serverless worker for text-to-speech inference using [F5-TTS](https://git
 ```json
 {
   "input": {
-    "text": "Text to speak",
-    "ref_audio": "https://example.com/reference-voice.wav",
-    "ref_text": "Reference audio transcription",
+    "text": "I don't really care what you call me. I've been a silent spectator, watching species evolve.",
+    "ref_audio": "https://raw.githubusercontent.com/SWivid/F5-TTS/main/src/f5_tts/infer/examples/basic/basic_ref_en.wav",
+    "ref_text": "Some call me nature, others call me mother nature.",
     "output_format": "wav"
   }
 }
 ```
 
-| Field | Required | Description |
-|-------|----------|-------------|
-| `text` | Yes | Text to synthesize. |
-| `ref_audio` | Yes | Public URL to a reference audio file. |
-| `ref_text` | No | Transcription of the reference audio. If empty, the model transcribes it automatically (uses extra VRAM). |
-| `output_format` | No | `wav` (default) or `mp3`. |
+| Field           | Required | Description                                                                                               |
+| --------------- | -------- | --------------------------------------------------------------------------------------------------------- |
+| `text`          | Yes      | Text to synthesize.                                                                                       |
+| `ref_audio`     | Yes      | Public URL to a reference audio file.                                                                     |
+| `ref_text`      | No       | Transcription of the reference audio. If empty, the model transcribes it automatically (uses extra VRAM). |
+| `output_format` | No       | `wav` (default) or `mp3`.                                                                                 |
 
 ### Output
 
@@ -85,13 +85,13 @@ If you keep it private, add a **Container Registry Auth** in RunPod with a GitHu
 
 Configure these in your RunPod endpoint settings:
 
-| Variable | RunPod Type | Description |
-|----------|-------------|-------------|
-| `R2_ACCOUNT_ID` | Environment Variable | Cloudflare account ID. |
-| `R2_ACCESS_KEY_ID` | Environment Variable or Secrets | R2 access key. |
-| `R2_SECRET_ACCESS_KEY` | **Secrets** | R2 secret key. |
-| `R2_BUCKET_NAME` | Environment Variable | Target R2 bucket. |
-| `R2_PUBLIC_DOMAIN` | Environment Variable | Optional public domain, e.g. `https://pub-xxx.r2.dev`. |
+| Variable               | RunPod Type                     | Description                                            |
+| ---------------------- | ------------------------------- | ------------------------------------------------------ |
+| `R2_ACCOUNT_ID`        | Environment Variable            | Cloudflare account ID.                                 |
+| `R2_ACCESS_KEY_ID`     | Environment Variable or Secrets | R2 access key.                                         |
+| `R2_SECRET_ACCESS_KEY` | **Secrets**                     | R2 secret key.                                         |
+| `R2_BUCKET_NAME`       | Environment Variable            | Target R2 bucket.                                      |
+| `R2_PUBLIC_DOMAIN`     | Environment Variable            | Optional public domain, e.g. `https://pub-xxx.r2.dev`. |
 
 > **Note:** Always store `R2_SECRET_ACCESS_KEY` as a RunPod Secret, not a plain environment variable.
 

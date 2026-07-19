@@ -1,8 +1,8 @@
 {
   "input": {
-    "text": "Hello, this is a test of the F5 text to speech model running on RunPod serverless.",
-    "ref_audio": "https://example.com/reference-voice.wav",
-    "ref_text": "This is the reference text for the sample voice.",
+    "text": "I don't really care what you call me. I've been a silent spectator, watching species evolve.",
+    "ref_audio": "https://raw.githubusercontent.com/SWivid/F5-TTS/main/src/f5_tts/infer/examples/basic/basic_ref_en.wav",
+    "ref_text": "Some call me nature, others call me mother nature.",
     "output_format": "wav"
   }
 }
