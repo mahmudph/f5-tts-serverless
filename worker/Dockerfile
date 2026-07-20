@@ -17,6 +17,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN python3 download_models.py && rm download_models.py
-
 CMD ["python3", "handler.py"]
