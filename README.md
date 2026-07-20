@@ -9,6 +9,7 @@ RunPod serverless worker for text-to-speech inference using [F5-TTS](https://git
 - Accepts a reference audio URL for voice cloning.
 - Returns generated audio as a public R2 URL (avoids RunPod payload limits).
 - Supports `wav` and `mp3` output formats.
+- Optional WhisperX forced alignment for word/sentence-level timestamps.
 - Builds Docker image via GitHub Actions (manual trigger) and pushes to GHCR.
 
 ## API
@@ -18,20 +19,24 @@ RunPod serverless worker for text-to-speech inference using [F5-TTS](https://git
 ```json
 {
   "input": {
-    "text": "I don't really care what you call me. I've been a silent spectator, watching species evolve.",
+    "text": "Saya tidak peduli apa panggilan Anda. Saya telah menjadi pengamat yang diam, menyaksikan spesies berevolusi.",
     "ref_audio": "https://raw.githubusercontent.com/SWivid/F5-TTS/main/src/f5_tts/infer/examples/basic/basic_ref_en.wav",
     "ref_text": "Some call me nature, others call me mother nature.",
-    "output_format": "wav"
+    "output_format": "wav",
+    "language": "id",
+    "return_timestamps": true
   }
 }
 ```
 
-| Field           | Required | Description                                                                                               |
-| --------------- | -------- | --------------------------------------------------------------------------------------------------------- |
-| `text`          | Yes      | Text to synthesize.                                                                                       |
-| `ref_audio`     | Yes      | Public URL to a reference audio file.                                                                     |
-| `ref_text`      | No       | Transcription of the reference audio. If empty, the model transcribes it automatically (uses extra VRAM). |
-| `output_format` | No       | `wav` (default) or `mp3`.                                                                                 |
+| Field              | Required | Description                                                                                               |
+| ------------------ | -------- | --------------------------------------------------------------------------------------------------------- |
+| `text`             | Yes      | Text to synthesize.                                                                                       |
+| `ref_audio`        | Yes      | Public URL to a reference audio file.                                                                     |
+| `ref_text`         | No       | Transcription of the reference audio. If empty, the model transcribes it automatically (uses extra VRAM). |
+| `output_format`    | No       | `wav` (default) or `mp3`.                                                                                 |
+| `language`         | No       | Language code for WhisperX forced alignment (default `"id"`).                                             |
+| `return_timestamps`| No       | If `true`, returns word/sentence timestamps (default `false`).                                            |
 
 ### Output
 
@@ -40,9 +45,21 @@ RunPod serverless worker for text-to-speech inference using [F5-TTS](https://git
   "audio_url": "https://pub-xxx.r2.dev/tts-output/uuid.wav",
   "model_used": "F5TTS_v1_Base",
   "sample_rate": 24000,
-  "duration_seconds": 5.2
+  "duration_seconds": 5.2,
+  "segments": [
+    {
+      "start": 0.5,
+      "end": 1.2,
+      "text": "Kalimat pertama.",
+      "words": [
+        {"word": "Kalimat", "start": 0.5, "end": 0.9, "score": 0.98},
+        {"word": "pertama.", "start": 0.9, "end": 1.2, "score": 0.97}
+      ]
+    }
+  ]
 }
 ```
+`segments` is only present when `return_timestamps` is `true`.
 
 On failure:
 
@@ -110,6 +127,7 @@ python worker/handler.py --test_input '{"input": {"text": "hello", "ref_audio": 
 worker/
   handler.py       # RunPod serverless entrypoint
   inference.py     # F5-TTS model loading and inference
+  alignment.py     # WhisperX forced alignment for timestamps
   storage.py       # R2 upload and reference audio download
   Dockerfile       # CUDA 12.1 runtime image
   requirements.txt # Python dependencies
@@ -117,6 +135,6 @@ worker/
 
 ## Notes
 
-- The model is downloaded from HuggingFace on the first cold start.
+- The model and WhisperX alignment model are downloaded from HuggingFace on the first cold start.
 - Reference audio must be accessible via a public URL.
 - Output is uploaded to R2 to avoid RunPod's payload size limits.
