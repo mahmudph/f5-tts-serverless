@@ -11,7 +11,7 @@
 
 - `worker/handler.py` — RunPod serverless entrypoint.
 - `worker/inference.py` — Model loading and TTS synthesis via `f5-tts` high-level API.
-- `worker/alignment.py` — WhisperX forced alignment for word/sentence timestamps.
+- `worker/alignment.py` — Wav2Vec2 forced alignment via torchaudio for word/sentence timestamps.
 - `worker/storage.py` — Download reference audio and upload output to R2.
 - `worker/Dockerfile` — CUDA 12.1 image for GPU inference.
 - `worker/requirements.txt` — Python dependencies.
@@ -72,8 +72,8 @@ Required: `text`, `ref_audio` (public URL).
 Optional:
 - `ref_text` — transcription of reference audio (auto-transcribed if empty, uses extra VRAM).
 - `output_format` — `wav` (default) or `mp3`.
-- `language` — language code for WhisperX forced alignment (default `"id"`).
-- `return_timestamps` — if `true`, returns word/sentence timestamps via WhisperX (default `false`).
+- `language` — language code for Wav2Vec2 forced alignment (default `"id"`).
+- `return_timestamps` — if `true`, returns word/sentence timestamps via torchaudio Wav2Vec2 alignment (default `false`).
 
 ## API output
 
@@ -105,11 +105,12 @@ On failure, handler returns `{"error": "..."}`.
 - Payload limits are avoided by returning R2 URLs instead of base64 audio.
 - Model and vocoder are loaded once per worker outside the handler.
 - Reference audio is downloaded from a public URL; base64 upload is not supported.
-- First cold start downloads the HuggingFace model and WhisperX alignment model; subsequent workers on the same host reuse cache.
+- First cold start downloads the HuggingFace model and Wav2Vec2 alignment model; subsequent workers on the same host reuse cache.
 - Keep `HF_HOME` as `/root/.cache/huggingface` (default) unless you attach a network volume.
 
 ## Things to check before editing
 
 - Do not pin a torch CPU build; `requirements.txt` uses `+cu121` with the PyTorch CUDA 12.1 index.
 - `f5-tts` is imported via `from f5_tts.api import F5TTS`; avoid calling low-level `load_model`/`infer_process` directly unless you understand the config/ckpt plumbing.
+- Forced alignment uses `torchaudio.pipelines.WAV2VEC2_ASR_BASE_960H` via CTC trellis DP; no whisperx/faster-whisper/ctranslate2 dependencies needed.
 - R2 env vars must all be present at runtime; missing credentials will fail the job with a clear error.

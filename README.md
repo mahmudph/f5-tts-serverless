@@ -9,7 +9,7 @@ RunPod serverless worker for text-to-speech inference using [F5-TTS](https://git
 - Accepts a reference audio URL for voice cloning.
 - Returns generated audio as a public R2 URL (avoids RunPod payload limits).
 - Supports `wav` and `mp3` output formats.
-- Optional WhisperX forced alignment for word/sentence-level timestamps.
+- Optional Wav2Vec2 forced alignment via torchaudio for word/sentence-level timestamps.
 - Builds Docker image via GitHub Actions (manual trigger) and pushes to GHCR.
 
 ## API
@@ -35,7 +35,7 @@ RunPod serverless worker for text-to-speech inference using [F5-TTS](https://git
 | `ref_audio`        | Yes      | Public URL to a reference audio file.                                                                     |
 | `ref_text`         | No       | Transcription of the reference audio. If empty, the model transcribes it automatically (uses extra VRAM). |
 | `output_format`    | No       | `wav` (default) or `mp3`.                                                                                 |
-| `language`         | No       | Language code for WhisperX forced alignment (default `"id"`).                                             |
+| `language`         | No       | Language code for Wav2Vec2 forced alignment (default `"id"`).                                             |
 | `return_timestamps`| No       | If `true`, returns word/sentence timestamps (default `false`).                                            |
 
 ### Output
@@ -127,7 +127,7 @@ python worker/handler.py --test_input '{"input": {"text": "hello", "ref_audio": 
 worker/
   handler.py       # RunPod serverless entrypoint
   inference.py     # F5-TTS model loading and inference
-  alignment.py     # WhisperX forced alignment for timestamps
+  alignment.py     # Wav2Vec2 forced alignment via torchaudio for timestamps
   storage.py       # R2 upload and reference audio download
   Dockerfile       # CUDA 12.1 runtime image
   requirements.txt # Python dependencies
@@ -135,6 +135,6 @@ worker/
 
 ## Notes
 
-- The model and WhisperX alignment model are downloaded from HuggingFace on the first cold start.
+- The model and Wav2Vec2 alignment model are downloaded from HuggingFace on the first cold start.
 - Reference audio must be accessible via a public URL.
 - Output is uploaded to R2 to avoid RunPod's payload size limits.

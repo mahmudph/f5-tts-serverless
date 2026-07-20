@@ -9,6 +9,3 @@ soundfile
 librosa
 numpy
 pydub
-whisperx==3.3.2
-pyannote.database==5.0.1
-pyannote.core==5.0.0
