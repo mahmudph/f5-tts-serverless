@@ -1,6 +1,7 @@
 import os
 import uuid
 import boto3
+from botocore.config import Config
 import requests
 
 R2_ACCOUNT_ID = os.getenv("R2_ACCOUNT_ID")
@@ -15,9 +16,11 @@ def get_r2_client():
         raise ValueError("R2_ACCOUNT_ID is not set")
     return boto3.client(
         "s3",
+        region_name="auto",
         endpoint_url=f"https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com",
         aws_access_key_id=R2_ACCESS_KEY_ID,
         aws_secret_access_key=R2_SECRET_ACCESS_KEY,
+        config=Config(signature_version="s3v4"),
     )
 
 
