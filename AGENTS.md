@@ -11,6 +11,7 @@
 
 - `worker/handler.py` — RunPod serverless entrypoint.
 - `worker/inference.py` — Model loading and TTS synthesis via `f5-tts` high-level API.
+- `worker/alignment.py` — WhisperX forced alignment for word/sentence timestamps.
 - `worker/storage.py` — Download reference audio and upload output to R2.
 - `worker/Dockerfile` — CUDA 12.1 image for GPU inference.
 - `worker/requirements.txt` — Python dependencies.
@@ -71,6 +72,8 @@ Required: `text`, `ref_audio` (public URL).
 Optional:
 - `ref_text` — transcription of reference audio (auto-transcribed if empty, uses extra VRAM).
 - `output_format` — `wav` (default) or `mp3`.
+- `language` — language code for WhisperX forced alignment (default `"id"`).
+- `return_timestamps` — if `true`, returns word/sentence timestamps via WhisperX (default `false`).
 
 ## API output
 
@@ -79,9 +82,21 @@ Optional:
   "audio_url": "https://...",
   "model_used": "F5TTS_v1_Base",
   "sample_rate": 24000,
-  "duration_seconds": 5.2
+  "duration_seconds": 5.2,
+  "segments": [
+    {
+      "start": 0.5,
+      "end": 1.2,
+      "text": "Kalimat pertama.",
+      "words": [
+        {"word": "Kalimat", "start": 0.5, "end": 0.9, "score": 0.98},
+        {"word": "pertama.", "start": 0.9, "end": 1.2, "score": 0.97}
+      ]
+    }
+  ]
 }
 ```
+`segments` is only present when `return_timestamps` is `true`.
 
 On failure, handler returns `{"error": "..."}`.
 
@@ -90,7 +105,7 @@ On failure, handler returns `{"error": "..."}`.
 - Payload limits are avoided by returning R2 URLs instead of base64 audio.
 - Model and vocoder are loaded once per worker outside the handler.
 - Reference audio is downloaded from a public URL; base64 upload is not supported.
-- First cold start downloads the HuggingFace model; subsequent workers on the same host reuse cache.
+- First cold start downloads the HuggingFace model and WhisperX alignment model; subsequent workers on the same host reuse cache.
 - Keep `HF_HOME` as `/root/.cache/huggingface` (default) unless you attach a network volume.
 
 ## Things to check before editing
