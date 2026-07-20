@@ -10,5 +10,3 @@ librosa
 numpy
 pydub
 whisperx
-ctranslate2
-nltk
