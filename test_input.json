@@ -1,8 +1,10 @@
 {
   "input": {
-    "text": "I don't really care what you call me. I've been a silent spectator, watching species evolve.",
+    "text": "Saya tidak peduli apa panggilan Anda. Saya telah menjadi pengamat yang diam, menyaksikan spesies berevolusi.",
     "ref_audio": "https://raw.githubusercontent.com/SWivid/F5-TTS/main/src/f5_tts/infer/examples/basic/basic_ref_en.wav",
     "ref_text": "Some call me nature, others call me mother nature.",
-    "output_format": "wav"
+    "output_format": "wav",
+    "language": "id",
+    "return_timestamps": true
   }
 }
