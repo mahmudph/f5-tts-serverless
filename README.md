@@ -138,3 +138,4 @@ worker/
 - The model and Wav2Vec2 alignment model are downloaded from HuggingFace on the first cold start.
 - Reference audio must be accessible via a public URL.
 - Output is uploaded to R2 to avoid RunPod's payload size limits.
+- Perlu deploy di Vast AI? Lihat versi [f5-tts-vast-ai](https://github.com/mahmudph/f5-tts-vast-ai).
