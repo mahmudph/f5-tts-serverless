@@ -6,3 +6,4 @@ soundfile
 librosa
 numpy
 pydub
+whisperx==3.3.2
