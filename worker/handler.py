@@ -49,6 +49,11 @@ def handler(job):
             ref_text=ref_text,
             model_name=model_name,
             output_path=wav_output_path,
+            remove_silence=job_input.get("remove_silence", True),
+            cfg_strength=job_input.get("cfg_strength", 2.0),
+            nfe_step=job_input.get("nfe_step", 32),
+            speed=job_input.get("speed", 1.0),
+            sway_sampling_coef=job_input.get("sway_sampling_coef", -1.0),
         )
 
         if return_timestamps:
