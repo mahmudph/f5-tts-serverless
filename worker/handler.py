@@ -16,6 +16,7 @@ def handler(job):
     text = job_input.get("text")
     ref_audio_url = job_input.get("ref_audio")
     ref_text = job_input.get("ref_text", "")
+    model_name = job_input.get("model", MODEL_NAME)
     output_format = job_input.get("output_format", "wav")
     language = job_input.get("language", "id")
     return_timestamps = job_input.get("return_timestamps", False)
@@ -43,7 +44,7 @@ def handler(job):
             text=text,
             ref_audio_path=ref_audio_path,
             ref_text=ref_text,
-            model_name=MODEL_NAME,
+            model_name=model_name,
             output_path=wav_output_path,
         )
 
@@ -61,7 +62,7 @@ def handler(job):
 
         response = {
             "audio_url": audio_url,
-            "model_used": MODEL_NAME,
+            "model_used": model_name,
             "sample_rate": result["sample_rate"],
             "duration_seconds": result["duration_seconds"],
         }

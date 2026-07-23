@@ -5,6 +5,7 @@ f5-tts
 runpod
 boto3
 requests
+huggingface_hub
 soundfile
 librosa
 numpy

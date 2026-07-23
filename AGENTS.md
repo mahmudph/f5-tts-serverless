@@ -2,7 +2,7 @@
 
 ## Project state
 
-- RunPod serverless worker for TTS inference using F5-TTS v1 Base model.
+- RunPod serverless worker for TTS inference using F5-TTS (supports base model and custom finetuned models from HuggingFace Hub).
 - Output audio is uploaded to Cloudflare R2 and returned as a public URL.
 - No local execution required; build the Docker image and deploy/test on RunPod.
 - Python 3.10 inside `nvidia/cuda:12.1.0-runtime-ubuntu22.04` base image.
@@ -73,6 +73,7 @@ Optional:
 - `ref_text` — transcription of reference audio (auto-transcribed if empty, uses extra VRAM).
 - `output_format` — `wav` (default) or `mp3`.
 - `language` — language code for Wav2Vec2 forced alignment (default `"id"`).
+- `model` — model to use: `"F5TTS_v1_Base"` (default) or `"F5TTS-INDO-V2"` for the Indonesian finetune `Eempostor/F5-TTS-INDO-FINETUNE-V2`.
 - `return_timestamps` — if `true`, returns word/sentence timestamps via torchaudio Wav2Vec2 alignment (default `false`).
 
 ## API output

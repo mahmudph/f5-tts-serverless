@@ -1,8 +1,9 @@
 {
   "input": {
-    "text": "Saya tidak peduli apa panggilan Anda. Saya telah menjadi pengamat yang diam, menyaksikan spesies berevolusi.",
-    "ref_audio": "https://raw.githubusercontent.com/SWivid/F5-TTS/main/src/f5_tts/infer/examples/basic/basic_ref_en.wav",
-    "ref_text": "Some call me nature, others call me mother nature.",
+    "text": "Halo, ini adalah tes dari F5-TTS versi Indonesia. Rasanya lebih natural dengan model finetune ini.",
+    "ref_audio": "https://huggingface.co/Eempostor/F5-TTS-INDO-FINETUNE-V2/resolve/main/ref_reporter.mp3",
+    "ref_text": "Saya melaporkan dari tempat kejadian. Situasi saat ini masih terus berkembang dan kami akan memberikan informasi terbaru secepatnya.",
+    "model": "F5TTS-INDO-V2",
     "output_format": "wav",
     "language": "id",
     "return_timestamps": true
