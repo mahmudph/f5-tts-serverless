@@ -6,7 +6,10 @@ from storage import download_audio, upload_to_r2
 from inference import synthesize
 from alignment import get_timestamps
 
-MODEL_NAME = "F5TTS_v1_Base"
+DEFAULT_MODEL = "F5TTS_v1_Base"
+LANGUAGE_MODEL_MAP = {
+    "id": "F5TTS-INDO-V2",
+}
 ALLOWED_FORMATS = ["wav", "mp3"]
 
 
@@ -16,9 +19,9 @@ def handler(job):
     text = job_input.get("text")
     ref_audio_url = job_input.get("ref_audio")
     ref_text = job_input.get("ref_text", "")
-    model_name = job_input.get("model", MODEL_NAME)
-    output_format = job_input.get("output_format", "wav")
     language = job_input.get("language", "id")
+    model_name = job_input.get("model") or LANGUAGE_MODEL_MAP.get(language, DEFAULT_MODEL)
+    output_format = job_input.get("output_format", "wav")
     return_timestamps = job_input.get("return_timestamps", False)
 
     if not text:
