@@ -6,6 +6,10 @@
     "output_format": "wav",
     "language": "id",
     "return_timestamps": true,
-    "speed": 0.85
+    "speed": 0.85,
+    "cfg_strength": 4.0,
+    "nfe_step": 32,
+    "sway_sampling_coef": -1.0,
+    "remove_silence": true
   }
 }
